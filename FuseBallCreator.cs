@@ -78,9 +78,8 @@ public class FuseBallCreator : MonoBehaviour {
 				HighScore = BallsSpawned;
 				PlayerPrefs.SetInt ("HighScore", HighScore);
 				GameObject.Find("HighScore").transform.position = new Vector2(0f, GameObject.Find("HighScore").transform.position.y);
-			} else {
-				GameObject.Find("Fuse").transform.position = new Vector2(0f, GameObject.Find("Fuse").transform.position.y);
 			}
+			GameObject.Find("Fuse").transform.position = new Vector2(0f, GameObject.Find("Fuse").transform.position.y);
 			if (AdCountdown < 1) {
 				if (interstitial.IsLoaded()) {
 					interstitial.Show();
@@ -91,15 +90,11 @@ public class FuseBallCreator : MonoBehaviour {
 			PlayerPrefs.SetInt ("AdCountdown", AdCountdown);
 			ShowGameOver = true;
 		}
-		if (Input.GetMouseButtonDown(0))
+		if(Input.GetMouseButtonDown(0))
 		{
 			RaycastHit2D hit = Physics2D.Raycast(new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x,Camera.main.ScreenToWorldPoint(Input.mousePosition).y), Vector2.zero);
 			if (hit.collider != null) {
 				if (hit.transform.gameObject.name == "Fuse")
-				{
-					Application.LoadLevel("LevelFuse");
-				}
-				if (hit.transform.gameObject.name == "FuseHigh")
 				{
 					Application.LoadLevel("LevelFuse");
 				}

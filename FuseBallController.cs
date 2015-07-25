@@ -55,13 +55,13 @@ public class FuseBallController : MonoBehaviour {
 				Destroy (coll.gameObject);
 			}
 			if (transform.localScale.x >= 0.6f + (0.2f * NumberForPop)) {
-				KillMeThen(gameObject, false);
-				KillEmAll(transform.position, GetComponent<SpriteRenderer>().bounds.extents.x + 0.5f);
+				ExplodeMe(gameObject);
+				BounceBalls(transform.position, GetComponent<SpriteRenderer>().bounds.extents.x + 0.5f);
 			}
 		}
 	}
 
-	public void KillEmAll(Vector3 point, float radius) {
+	public void BounceBalls(Vector3 point, float radius) {
 		float px;
 		Collider2D[] nearby = Physics2D.OverlapCircleAll (point, radius);
 		if (nearby != null) {
@@ -76,21 +76,16 @@ public class FuseBallController : MonoBehaviour {
 	
 
 
-	public void KillMeThen(GameObject Victim, bool Quickly){
+	public void ExplodeMe(GameObject Victim){
 		Victim.GetComponent<FuseBallController> ().isDestroyed = true;
-		if (Quickly) {
-			Destroy (Victim);
-		} else {
-			Victim.GetComponent<Rigidbody2D>().isKinematic = true;
-			Victim.GetComponent<CircleCollider2D> ().enabled = false;
-			Victim.name = "Dying Ball";
-			Victim.layer = LayerMask.NameToLayer("Explosion");
-			Victim.transform.position = new Vector3 (Victim.transform.position.x, Victim.transform.position.y, Victim.transform.position.z +1);
-			StartCoroutine(GrowFade(Victim));
-		}
-
+		Victim.GetComponent<Rigidbody2D>().isKinematic = true;
+		Victim.GetComponent<CircleCollider2D> ().enabled = false;
+		Victim.name = "Dying Ball";
+		Victim.layer = LayerMask.NameToLayer("Explosion");
+		Victim.transform.position = new Vector3 (Victim.transform.position.x, Victim.transform.position.y, Victim.transform.position.z +1);
+		StartCoroutine(GrowFade(Victim));
 	}
-
+	
 	IEnumerator GrowFade (GameObject obj)
 	{
 		Renderer rend = obj.GetComponent<Renderer>();

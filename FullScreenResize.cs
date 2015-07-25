@@ -17,7 +17,7 @@ public class FullScreenResize : MonoBehaviour {
 		Width = WaterSprite.bounds.size.x;
 		Height = WaterSprite.bounds.size.y;
 		ScreenHeight = Camera.main.orthographicSize * 2f;
-		ScreenWidth = ScreenHeight / Screen.height * Screen.width;
+			ScreenWidth = ScreenHeight / Screen.height * Screen.width;
 		NewSize = new Vector3 (ScreenWidth / Width, ScreenHeight / Height, transform.localScale.z);
 		transform.localScale = NewSize;
 	}
