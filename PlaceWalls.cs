@@ -29,6 +29,12 @@ public class PlaceWalls : MonoBehaviour {
 		} else if (gameObject.name == "Ramp") {
 			pos = Camera.main.ViewportToWorldPoint (new Vector2 (0.5f, 0.23f));
 			transform.position = pos;
+		} else if (gameObject.name == "Pause") {
+			pos = Camera.main.ViewportToWorldPoint (new Vector2 (0.9f, 0.9f));
+			transform.position = pos;
+		} else if (gameObject.name == "Mute") {
+			pos = Camera.main.ViewportToWorldPoint (new Vector2 (0.1f, 0.9f));
+			transform.position = pos;
 		}
 	}
 }

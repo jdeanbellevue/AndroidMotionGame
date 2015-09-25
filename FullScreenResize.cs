@@ -5,17 +5,17 @@ public class FullScreenResize : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		SpriteRenderer WaterSprite;
+		SpriteRenderer CurtainSprite;
 		float Width;
 		float Height;
 		float ScreenWidth;
 		float ScreenHeight;
 		Vector3 NewSize;
 
-		WaterSprite = GetComponent<SpriteRenderer> ();
+		CurtainSprite = GetComponent<SpriteRenderer> ();
 		transform.localScale = Vector3.one;
-		Width = WaterSprite.bounds.size.x;
-		Height = WaterSprite.bounds.size.y;
+		Width = CurtainSprite.bounds.size.x;
+		Height = CurtainSprite.bounds.size.y;
 		ScreenHeight = Camera.main.orthographicSize * 2f;
 			ScreenWidth = ScreenHeight / Screen.height * Screen.width;
 		NewSize = new Vector3 (ScreenWidth / Width, ScreenHeight / Height, transform.localScale.z);
