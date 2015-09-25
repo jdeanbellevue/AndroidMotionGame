@@ -2,13 +2,15 @@
 using System.Collections;
 
 public class FuseBallController : MonoBehaviour {
-	int colorpicker;
 	Rigidbody2D rigbod;
 	Color col;
 	bool isDestroyed;
 	public static int NumberOfColors = 6;
 	public static int NumberForPop = 4;
+	public AudioClip PopSound;
+	AudioSource PopSource;
 	void Start () {
+		PopSource = Camera.main.GetComponent<AudioSource> ();
 		switch(Random.Range (0, NumberOfColors))
 		{
 		case 0:
@@ -56,7 +58,12 @@ public class FuseBallController : MonoBehaviour {
 			}
 			if (transform.localScale.x >= 0.6f + (0.2f * NumberForPop)) {
 				ExplodeMe(gameObject);
-				BounceBalls(transform.position, GetComponent<SpriteRenderer>().bounds.extents.x + 0.5f);
+				if (FuseBallCreator.Preload == false) {
+					if (PlayerPrefs.GetInt ("IsMuted") == 0) {
+						PopSource.PlayOneShot(PopSound);
+					}
+					BounceBalls(transform.position, GetComponent<SpriteRenderer>().bounds.extents.x + 0.5f);
+				}
 			}
 		}
 	}
@@ -92,18 +99,18 @@ public class FuseBallController : MonoBehaviour {
 		Color newColor;
 		float alphaValue = 1.0f;
 		rend.sortingOrder = 1;
-		if (Time.timeScale == 0f) {
-			yield return null;
-		}
 		while (alphaValue >= 0.3f)
 		{
-			alphaValue -= Time.deltaTime;
-			newColor = rend.material.color;
-			newColor.a = Mathf.Min ( newColor.a, alphaValue ); 
-			newColor.a = Mathf.Clamp (newColor.a, 0.0f, 1.0f); 				
-			rend.material.SetColor("_Color", newColor) ; 
-			obj.transform.localScale += new Vector3(0.07f, 0.07f, 0);
+			if (Time.timeScale > 1f) {
+				alphaValue -= Time.deltaTime;
+				newColor = rend.material.color;
+				newColor.a = Mathf.Min ( newColor.a, alphaValue ); 
+				newColor.a = Mathf.Clamp (newColor.a, 0.0f, 1.0f); 				
+				rend.material.SetColor("_Color", newColor) ; 
+				obj.transform.localScale += new Vector3(0.07f, 0.07f, 0);
+			}
 			yield return null; 
+
 		}
 		Destroy (obj);
 		yield return null;
